@@ -1,68 +1,77 @@
+/* ==========================================================================
+   Talleres Juma — interactions.js
+   Barra de progreso, scroll-reveal, nav móvil, smooth scroll, año footer
+   ========================================================================== */
+
 (function () {
-  var progressBar = document.querySelector('.progress-bar');
-  var navbar = document.querySelector('.navbar');
-  var backToTop = document.querySelector('.back-to-top');
+  "use strict";
 
-  function onScroll() {
-    var doc = document.documentElement;
-    var max = doc.scrollHeight - window.innerHeight;
-    var progress = max > 0 ? window.scrollY / max : 0;
+  // ---------- Año dinámico en footer ----------
+  var yearEl = document.getElementById("year");
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-    if (progressBar) {
-      progressBar.style.width = (progress * 100).toFixed(2) + '%';
-    }
+  // ---------- Barra de progreso de scroll ----------
+  var progressBar = document.getElementById("progressBar");
+  var nav = document.getElementById("nav");
 
-    if (navbar) {
-      navbar.classList.toggle('is-scrolled', window.scrollY > 40);
-    }
-
-    if (backToTop) {
-      backToTop.classList.toggle('is-visible', window.scrollY > 700);
-    }
+  function updateOnScroll() {
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = max > 0 ? (window.scrollY / max) * 100 : 0;
+    if (progressBar) progressBar.style.width = pct + "%";
+    if (nav) nav.classList.toggle("scrolled", window.scrollY > 30);
   }
+  window.addEventListener("scroll", updateOnScroll, { passive: true });
+  updateOnScroll();
 
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-
-  if (backToTop) {
-    backToTop.addEventListener('click', function () {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  }
-
-  var navLinks = document.querySelectorAll('a[href^="#"]');
-  navLinks.forEach(function (link) {
-    link.addEventListener('click', function (event) {
-      var targetId = link.getAttribute('href');
-      if (targetId.length <= 1) return;
-      var target = document.querySelector(targetId);
-      if (!target) return;
-      event.preventDefault();
-      var navHeight = navbar ? navbar.offsetHeight : 0;
-      var targetPosition = target.getBoundingClientRect().top + window.scrollY - navHeight + 1;
-      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-    });
-  });
-
-  var revealElements = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window && revealElements.length) {
+  // ---------- Scroll reveal ----------
+  var revealEls = document.querySelectorAll(".reveal");
+  if ("IntersectionObserver" in window && revealEls.length) {
     var observer = new IntersectionObserver(
       function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
+            entry.target.classList.add("is-visible");
             observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.18, rootMargin: '0px 0px -60px 0px' }
+      { threshold: 0.15, rootMargin: "0px 0px -60px 0px" }
     );
-    revealElements.forEach(function (el) {
+    revealEls.forEach(function (el) {
       observer.observe(el);
     });
   } else {
-    revealElements.forEach(function (el) {
-      el.classList.add('is-visible');
+    revealEls.forEach(function (el) {
+      el.classList.add("is-visible");
     });
   }
+
+  // ---------- Nav móvil ----------
+  var navToggle = document.getElementById("navToggle");
+  if (navToggle && nav) {
+    navToggle.addEventListener("click", function () {
+      var isOpen = nav.classList.toggle("open");
+      navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      navToggle.setAttribute("aria-label", isOpen ? "Cerrar menú" : "Abrir menú");
+    });
+
+    document.querySelectorAll(".nav-links a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        nav.classList.remove("open");
+        navToggle.setAttribute("aria-expanded", "false");
+      });
+    });
+  }
+
+  // ---------- Smooth scroll para enlaces internos ----------
+  document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+    link.addEventListener("click", function (e) {
+      var id = link.getAttribute("href");
+      if (id.length < 2) return;
+      var target = document.querySelector(id);
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
 })();

@@ -1,406 +1,1489 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-DO">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>La Avenida Terrace & Club — Restaurante, Bar y Terraza en Bonao</title>
-<meta name="description" content="La Avenida Terrace & Club: restaurante, bar premium y terraza en Bonao, República Dominicana. Cocina de autor, coctelería de firma y la mejor experiencia nocturna.">
-<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/reset.css">
-<link rel="stylesheet" href="css/layout.css">
-<link rel="stylesheet" href="css/components.css">
-<link rel="stylesheet" href="css/animations.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Talleres Juma — Mecánica Automotriz en Bonao, RD</title>
+
+  <meta
+    name="description"
+    content="36 años de experiencia y 20 años como empresa propia. Servicio automotriz serio, dedicado y responsable en Bonao, República Dominicana."
+  >
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=ui-monospace&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="icon" href="assets/logo.png" type="image/png">
+
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+
+  <style>
+    /* ==========================================================
+       MEJORAS DE SERVICIOS
+       ========================================================== */
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .service-card {
+      position: relative;
+      overflow: hidden;
+      transition:
+        transform .3s ease,
+        border-color .3s ease,
+        box-shadow .3s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .service-icon-box {
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 15px;
+      border: 1px solid currentColor;
+      border-radius: 9px;
+      opacity: .85;
+    }
+
+    .service-icon-box svg {
+      width: 19px !important;
+      height: 19px !important;
+      display: block !important;
+      fill: none !important;
+      stroke: currentColor !important;
+      stroke-width: 1.7 !important;
+      stroke-linecap: round !important;
+      stroke-linejoin: round !important;
+    }
+
+    .service-card h3 {
+      margin-top: 0;
+    }
+
+    /* ==========================================================
+       IMÁGENES DE LAS SECCIONES "NOSOTROS" Y "CÓMO TRABAJAMOS"
+       ========================================================== */
+
+    .split-visual {
+      overflow: hidden;
+    }
+
+    .split-visual .visual-frame {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      min-height: 430px;
+    }
+
+    .split-visual .visual-frame img {
+      width: 100%;
+      height: 100%;
+      min-height: 430px;
+      display: block;
+      object-fit: cover;
+      object-position: center;
+      transition: transform .7s cubic-bezier(.2,.7,.2,1);
+    }
+
+    .split-visual:hover .visual-frame img {
+      transform: scale(1.035);
+    }
+
+    /* Evita que el antiguo glyph aparezca */
+    .split-visual .visual-glyph {
+      display: none;
+    }
+
+    /* ==========================================================
+       GALERÍA
+       ========================================================== */
+
+    .gallery-image-wrap {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .gallery-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .65s cubic-bezier(.2,.7,.2,1);
+    }
+
+    .gallery-item:hover .gallery-image-wrap img {
+      transform: scale(1.045);
+    }
+
+    /* ==========================================================
+       TESTIMONIOS
+       ========================================================== */
+
+    .testimonial-card {
+      transition:
+        transform .3s ease,
+        border-color .3s ease;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-4px);
+    }
+
+    /* ==========================================================
+       MAPA
+       ========================================================== */
+
+    .cta-map {
+      overflow: hidden;
+      border-radius: 16px;
+      min-height: 400px;
+    }
+
+    .cta-map iframe {
+      width: 100%;
+      height: 100%;
+      min-height: 400px;
+      border: 0;
+      display: block;
+    }
+
+    /* ==========================================================
+       RESPONSIVE
+       ========================================================== */
+
+    @media (max-width: 900px) {
+
+      .service-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .split-visual .visual-frame,
+      .split-visual .visual-frame img {
+        min-height: 360px;
+      }
+    }
+
+    @media (max-width: 600px) {
+
+      .service-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .service-card {
+        min-height: auto;
+      }
+
+      .split-visual .visual-frame,
+      .split-visual .visual-frame img {
+        min-height: 280px;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<a class="skip-link" href="#contenido-principal">Saltar al contenido</a>
+  <div class="progress-bar" id="progressBar" aria-hidden="true"></div>
 
-<div class="progress-bar" role="presentation"></div>
-
-<canvas id="scene-canvas" class="scene-canvas" aria-hidden="true"></canvas>
-<div class="vignette" aria-hidden="true"></div>
-
-<header class="navbar">
-  <a href="#inicio" class="navbar__logo">La Avenida <span>Terrace &amp; Club</span></a>
-  <nav class="navbar__links" aria-label="Navegación principal">
-    <a href="#inicio">Inicio</a>
-    <a href="#especialidades">Menú</a>
-    <a href="#galeria">Galería</a>
-    <a href="#ubicacion">Ubicación</a>
-    <a href="#horario">Horario</a>
-    <a href="#contacto">Contacto</a>
-  </nav>
-  <a href="https://wa.me/18095252585" target="_blank" rel="noopener" class="btn btn--primary">Reservar</a>
-</header>
-
-<main id="contenido-principal">
-
-  <section class="hero" id="inicio">
-    <div class="container hero__content">
-      <span class="badge">Restaurante • Terraza • Bar</span>
-      <h1>La mejor experiencia gastronómica y nocturna de Bonao</h1>
-      <p class="hero__lead">Cocina de autor, coctelería de firma y una terraza bajo las estrellas — donde Bonao se reúne para cenar, brindar y vivir la noche.</p>
-      <div class="hero__actions">
-        <a href="https://wa.me/18095252585" target="_blank" rel="noopener" class="btn btn--primary" aria-label="Reservar mesa por WhatsApp">Reservar por WhatsApp</a>
-        <a href="https://www.google.com/maps/place/La+Avenida+Terrace+%26+Club/@18.9396235,-70.4034704,17z/data=!3m1!4b1!4m6!3m5!1s0x8eafdf4a45250bf1:0xcb5d07a76aa80202!8m2!3d18.9396184!4d-70.4008955!16s%2Fg%2F11jq7rt3sf" target="_blank" rel="noopener" class="btn btn--ghost" aria-label="Cómo llegar en Google Maps">Cómo llegar</a>
-      </div>
-      <div class="hero__stats">
-        <div class="stat">
-          <span class="stat__value" aria-hidden="true">★★★★★</span>
-          <span class="stat__label">Miles de clientes</span>
-        </div>
-        <div class="stat">
-          <span class="stat__value">100%</span>
-          <span class="stat__label">Ambiente Premium</span>
-        </div>
-        <div class="stat">
-          <span class="stat__value">7/7</span>
-          <span class="stat__label">Abierto todos los días</span>
-        </div>
-      </div>
-      <div class="scroll-hint">
-        <span>Desliza para descubrir</span>
-        <span class="scroll-hint__line" aria-hidden="true"></span>
-      </div>
-    </div>
-  </section>
-
-  <section id="experiencia">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="eyebrow">Nuestra experiencia</span>
-        <h2>Tres formas de vivir la noche</h2>
-      </div>
-      <div class="grid-3">
-        <article class="glass-card experience-card reveal reveal--delay-1">
-          <svg class="experience-card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-            <path d="M14 6v16a4 4 0 0 0 8 0V6M18 6v14M22 6v14M32 6v36M32 6c-4 0-6 4-6 9s2 8 6 9"/>
-          </svg>
-          <h3>Restaurante</h3>
-          <p>Cocina de autor con producto local e internacional, servida en un salón íntimo y sofisticado.</p>
-        </article>
-        <article class="glass-card experience-card reveal reveal--delay-2">
-          <svg class="experience-card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-            <path d="M10 8h28l-12 16v14h-4V24Z"/>
-            <path d="M16 42h16"/>
-          </svg>
-          <h3>Bar Premium</h3>
-          <p>Coctelería de firma preparada por bartenders expertos, con etiquetas selectas y presentaciones únicas.</p>
-        </article>
-        <article class="glass-card experience-card reveal reveal--delay-3">
-          <svg class="experience-card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-            <path d="M6 40h36M10 40V22l14-12 14 12v18"/>
-            <path d="M20 40V28h8v12"/>
-          </svg>
-          <h3>Terraza</h3>
-          <p>Un espacio al aire libre con luces cálidas y vegetación, pensado para las mejores noches de Bonao.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section id="galeria">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="eyebrow">Galería</span>
-        <h2>Un vistazo a la terraza</h2>
-      </div>
-      <div class="gallery-grid">
-      <div class="gallery-row">
-        <figure class="gallery-item gallery-item--logo reveal reveal--delay-1" style="--ar:1.6"><img src="assets/la_avenida_transparente.png" alt="Logo de La Avenida Terrace &amp; Club" loading="lazy" decoding="async"></figure>
-        <figure class="gallery-item reveal reveal--delay-2" style="--ar:.541"><img src="assets/im2.jpg" alt="Parrillada de carnes con tostones, papas fritas y salsas" loading="lazy" decoding="async"></figure>
-        <figure class="gallery-item reveal reveal--delay-3" style="--ar:.809"><img src="assets/im3.jpg" alt="Tostones y longaniza con salsas y limón" loading="lazy" decoding="async"></figure>
-      </div>
-      <div class="gallery-row">
-        <figure class="gallery-item reveal reveal--delay-1" style="--ar:1"><img src="assets/im4.jpg" alt="Desayuno de La Avenida con huevos, tocineta y jugo de naranja" loading="lazy" decoding="async"></figure>
-        <figure class="gallery-item reveal reveal--delay-2" style="--ar:.561"><img src="assets/im5.jpg" alt="Papas fritas con salchicha, queso y salsas" loading="lazy" decoding="async"></figure>
-        <figure class="gallery-item reveal reveal--delay-3" style="--ar:.561"><img src="assets/im6.jpg" alt="Papas con carne y cebolla encurtida junto a un cóctel rojo" loading="lazy" decoding="async"></figure>
-      </div>
-    </div>
-    </div>
-  </section>
-
-  <section id="especialidades">
-    <div class="container">
-      <div class="section-header centered reveal" style="margin-inline:auto;">
-        <span class="eyebrow">Especialidades</span>
-        <h2>Sabores que definen la casa</h2>
-      </div>
-      <div class="grid-6">
-        <article class="glass-card specialty-card reveal reveal--delay-1">
-          <span class="specialty-card__tag">Del fuego</span>
-          <h3>Carnes</h3>
-          <p>Cortes premium a la parrilla, madurados y servidos en su punto exacto.</p>
-        </article>
-        <article class="glass-card specialty-card reveal reveal--delay-2">
-          <span class="specialty-card__tag">Del mar</span>
-          <h3>Mariscos</h3>
-          <p>Selección fresca del día, preparada con técnicas de autor.</p>
-        </article>
-        <article class="glass-card specialty-card reveal reveal--delay-3">
-          <span class="specialty-card__tag">De la casa</span>
-          <h3>Pastas</h3>
-          <p>Elaboración artesanal con salsas propias y producto de temporada.</p>
-        </article>
-        <article class="glass-card specialty-card reveal reveal--delay-1">
-          <span class="specialty-card__tag">Para empezar</span>
-          <h3>Entradas</h3>
-          <p>Pequeños platos pensados para compartir antes del plato principal.</p>
-        </article>
-        <article class="glass-card specialty-card reveal reveal--delay-2">
-          <span class="specialty-card__tag">Para cerrar</span>
-          <h3>Postres</h3>
-          <p>Repostería de autor con un balance justo entre dulzor y elegancia.</p>
-        </article>
-        <article class="glass-card specialty-card reveal reveal--delay-3">
-          <span class="specialty-card__tag">De autor</span>
-          <h3>Cócteles</h3>
-          <p>Creaciones originales de nuestra barra, con destilados premium.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section id="historia">
-    <div class="container split">
-      <div class="historia__visual reveal">
-        <img src="assets/im1.jpg" alt="Picada de La Avenida con papas fritas, limón y salsa" loading="lazy" decoding="async">
-      </div>
-      <div class="historia__copy reveal reveal--delay-1">
-        <span class="eyebrow">Nuestra historia</span>
-        <h2>Donde la gastronomía se encuentra con la noche</h2>
-        <p>La Avenida Terrace &amp; Club nació con una idea simple: ofrecerle a Bonao un espacio a la altura de sus mejores noches. Un lugar donde la cocina de autor, la coctelería cuidada y una terraza cálida conviven bajo un mismo techo.</p>
-        <p>Desde entonces, cada detalle —de la iluminación al servicio— se pensó para que cada visita se sienta como una ocasión especial, sin perder la cercanía de un lugar propio.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="horario">
-    <div class="container">
-      <div class="section-header centered reveal" style="margin-inline:auto;">
-        <span class="eyebrow">Horario</span>
-        <h2>Te esperamos todos los días</h2>
-      </div>
-      <div class="schedule-list reveal">
-        <div class="schedule-row">
-          <span class="schedule-row__day">Lunes</span>
-          <span class="schedule-row__hours">8:00 AM — 12:00 AM</span>
-        </div>
-        <div class="schedule-row">
-          <span class="schedule-row__day">Martes</span>
-          <span class="schedule-row__hours">6:00 AM — 2:00 AM</span>
-        </div>
-        <div class="schedule-row">
-          <span class="schedule-row__day">Miércoles</span>
-          <span class="schedule-row__hours">6:00 AM — 2:00 AM</span>
-        </div>
-        <div class="schedule-row">
-          <span class="schedule-row__day">Jueves</span>
-          <span class="schedule-row__hours">6:00 AM — 2:00 AM</span>
-        </div>
-        <div class="schedule-row">
-          <span class="schedule-row__day">Viernes</span>
-          <span class="schedule-row__hours">6:00 AM — 3:00 AM</span>
-        </div>
-        <div class="schedule-row">
-          <span class="schedule-row__day">Sábado</span>
-          <span class="schedule-row__hours">6:00 AM — 3:00 AM</span>
-        </div>
-        <div class="schedule-row">
-          <span class="schedule-row__day">Domingo</span>
-          <span class="schedule-row__hours">6:00 AM — 2:00 AM</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="resenas">
-    <div class="container">
-      <div class="section-header centered reveal" style="margin-inline:auto;">
-        <span class="eyebrow">Reseñas</span>
-        <h2>Lo que dicen nuestros clientes</h2>
-      </div>
-      <div class="reviews-grid">
-        <article class="glass-card review-card reveal reveal--delay-1">
-          <span class="review-card__stars" aria-hidden="true">★★★★★</span>
-          <blockquote>&ldquo;La terraza de noche es otro mundo. Los cócteles y el servicio hicieron que la velada fuera perfecta.&rdquo;</blockquote>
-          <p class="review-card__author">Camila R.</p>
-        </article>
-        <article class="glass-card review-card reveal reveal--delay-2">
-          <span class="review-card__stars" aria-hidden="true">★★★★★</span>
-          <blockquote>&ldquo;Ambiente elegante sin perder la calidez dominicana. Volvemos cada vez que hay algo que celebrar.&rdquo;</blockquote>
-          <p class="review-card__author">Julio M.</p>
-        </article>
-        <article class="glass-card review-card reveal reveal--delay-3">
-          <span class="review-card__stars" aria-hidden="true">★★★★★</span>
-          <blockquote>&ldquo;Los cortes a la parrilla son excelentes y la atención, impecable. Nuestro lugar favorito en Bonao.&rdquo;</blockquote>
-          <p class="review-card__author">Estefanía P.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section id="ubicacion">
-    <div class="container">
-      <div class="section-header centered reveal" style="margin-inline:auto;">
-        <span class="eyebrow">Ubicación</span>
-        <h2>Encuéntranos en Bonao</h2>
-      </div>
-      <div class="glass-card map-card reveal">
-        <p class="map-card__address">Av. Libertad 86, Bonao 42000, República Dominicana</p>
-        <div class="map-card__actions">
-          <a href="https://www.google.com/maps/place/La+Avenida+Terrace+%26+Club/@18.9396235,-70.4034704,17z/data=!3m1!4b1!4m6!3m5!1s0x8eafdf4a45250bf1:0xcb5d07a76aa80202!8m2!3d18.9396184!4d-70.4008955!16s%2Fg%2F11jq7rt3sf" target="_blank" rel="noopener" class="btn btn--primary">Abrir Google Maps</a>
-          <button type="button" id="copy-address-btn" class="btn btn--ghost">Copiar dirección</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="faq">
-    <div class="container">
-      <div class="section-header centered reveal" style="margin-inline:auto;">
-        <span class="eyebrow">Preguntas frecuentes</span>
-        <h2>Todo lo que necesitas saber</h2>
-      </div>
-      <div class="faq-list">
-        <div class="faq-item reveal">
-          <button class="faq-item__question" aria-expanded="false">
-            <span>¿Necesito reservar con anticipación?</span>
-            <svg class="faq-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-          </button>
-          <div class="faq-item__answer">
-            <div class="faq-item__answer-inner">
-              <p>Se recomienda reservar, especialmente los fines de semana, para asegurar mesa en la terraza.</p>
-            </div>
-          </div>
-        </div>
-        <div class="faq-item reveal">
-          <button class="faq-item__question" aria-expanded="false">
-            <span>¿Tienen estacionamiento?</span>
-            <svg class="faq-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-          </button>
-          <div class="faq-item__answer">
-            <div class="faq-item__answer-inner">
-              <p>Sí, contamos con espacio de estacionamiento cercano para nuestros clientes.</p>
-            </div>
-          </div>
-        </div>
-        <div class="faq-item reveal">
-          <button class="faq-item__question" aria-expanded="false">
-            <span>¿Reciben grupos grandes o eventos privados?</span>
-            <svg class="faq-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-          </button>
-          <div class="faq-item__answer">
-            <div class="faq-item__answer-inner">
-              <p>Sí, organizamos eventos privados y reservas grupales. Escríbenos por WhatsApp para coordinar los detalles.</p>
-            </div>
-          </div>
-        </div>
-        <div class="faq-item reveal">
-          <button class="faq-item__question" aria-expanded="false">
-            <span>¿Cuál es el código de vestimenta?</span>
-            <svg class="faq-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-          </button>
-          <div class="faq-item__answer">
-            <div class="faq-item__answer-inner">
-              <p>Vestimenta casual elegante. Recomendamos evitar ropa deportiva o de playa.</p>
-            </div>
-          </div>
-        </div>
-        <div class="faq-item reveal">
-          <button class="faq-item__question" aria-expanded="false">
-            <span>¿Tienen opciones vegetarianas?</span>
-            <svg class="faq-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-          </button>
-          <div class="faq-item__answer">
-            <div class="faq-item__answer-inner">
-              <p>Sí, nuestro menú incluye entradas, pastas y platos principales vegetarianos.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="cta-final" id="contacto">
-    <div class="container">
-      <div class="cta-final__panel glass-card reveal">
-        <span class="eyebrow">Reserva tu mesa</span>
-        <h2>Vive la noche en La Avenida</h2>
-        <p>Escríbenos y reservamos tu lugar en la terraza para esta noche.</p>
-        <div class="cta-final__actions">
-          <a href="https://wa.me/18095252585" target="_blank" rel="noopener" class="btn btn--primary">Reservar por WhatsApp</a>
-          <a href="tel:+18095252585" class="btn btn--ghost">Llamar ahora</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<footer class="site-footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="footer-brand__logo">La Avenida <span>Terrace &amp; Club</span></div>
-        <p>Restaurante, bar premium y terraza en el corazón de Bonao, República Dominicana.</p>
-        <div class="footer-social">
-          <a href="https://www.instagram.com/laavenidabarbonao" target="_blank" rel="noopener" aria-label="Instagram de La Avenida Terrace & Club">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
-          </a>
-          <a href="https://www.facebook.com/search/top/?q=La%20Avenida%20Terrace%20%26%20Club.facebook" target="_blank" rel="noopener" aria-label="Facebook de La Avenida Terrace & Club">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 9h3V6h-3a3 3 0 0 0-3 3v2H9v3h2v6h3v-6h3l1-3h-4v-2a1 1 0 0 1 1-1Z"/></svg>
-          </a>
-        </div>
-      </div>
-      <div class="footer-col">
-        <h4>Contacto</h4>
-        <p>Av. Libertad 86, Bonao 42000, República Dominicana</p>
-        <a href="tel:+18095252585">+1 (809) 525-2585</a>
-        <a href="https://wa.me/18095252585" target="_blank" rel="noopener">Escribir por WhatsApp</a>
-      </div>
-      <div class="footer-col">
-        <h4>Enlaces</h4>
-        <a href="#especialidades">Menú</a>
-        <a href="#galeria">Galería</a>
-        <a href="#horario">Horario</a>
-        <a href="#faq">Preguntas frecuentes</a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>© 2026 La Avenida Terrace &amp; Club. Todos los derechos reservados.</span>
-      <span>Bonao, República Dominicana</span>
-    </div>
+  <div class="scene-wrap" aria-hidden="true">
+    <canvas id="scene-canvas"></canvas>
+    <div class="scene-vignette"></div>
+    <div class="scene-fallback" id="sceneFallback"></div>
   </div>
-</footer>
 
-<aside class="social-float" aria-label="Redes sociales">
-  <a href="https://wa.me/18095252585" target="_blank" rel="noopener" class="social-float__btn social-float__btn--wa" aria-label="Escríbenos por WhatsApp">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 20.5l1.3-4.2A8.5 8.5 0 1 1 8 19.3l-4.5 1.2Z"/><path d="M9 8.5c-.3 2.6 3 6 6 6.2l1.2-1.4-2-1-.9.8c-.9-.4-1.9-1.4-2.3-2.3l.8-.9-1-2L9 8.5Z"/></svg>
+  <a class="skip-link" href="#contenido">
+    Saltar al contenido
   </a>
-  <a href="https://www.instagram.com/laavenidabarbonao" target="_blank" rel="noopener" class="social-float__btn" aria-label="Instagram de La Avenida">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+
+  <!-- ==========================================================
+       NAVEGACIÓN
+       ========================================================== -->
+
+  <header class="nav" id="nav">
+
+    <div class="nav-inner">
+
+      <a
+        href="#top"
+        class="brand"
+        aria-label="Talleres Juma — Inicio"
+      >
+        <img
+          src="assets/logo.png"
+          alt="Talleres Juma"
+          class="brand-logo"
+        >
+      </a>
+
+      <nav
+        class="nav-links"
+        id="navLinks"
+        aria-label="Navegación principal"
+      >
+        <a href="#servicios">Servicios</a>
+        <a href="#nosotros">Nosotros</a>
+        <a href="#galeria">Galería</a>
+        <a href="#opiniones">Opiniones</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+
+     <a
+  href="https://wa.me/18092962300"
+  class="nav-cta whatsapp-btn"
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Escribir a Talleres Juma por WhatsApp"
+>
+  <span class="wa-icon">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M20.5 3.5A11.8 11.8 0 0 0 12.08 0C5.55 0 .23 5.32.23 11.86c0 2.09.55 4.13 1.59 5.94L.13 24l6.34-1.66a11.84 11.84 0 0 0 5.61 1.42h.01c6.53 0 11.85-5.32 11.85-11.86 0-3.17-1.23-6.15-3.44-8.4ZM12.09 21.7h-.01a9.82 9.82 0 0 1-5.01-1.37l-.36-.21-3.76.99 1-3.66-.23-.38a9.82 9.82 0 0 1-1.51-5.21C2.21 6.43 6.64 2 12.08 2c2.64 0 5.12 1.03 6.98 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.44-4.43 9.87-9.86 9.87Zm5.4-7.39c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.67-2.07-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.49s1.07 2.89 1.22 3.09c.15.2 2.1 3.21 5.09 4.5.71.31 1.27.49 1.7.63.72.23 1.38.2 1.9.12.58-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35Z"/>
+    </svg>
+  </span>
+
+  <span class="wa-text">
+    <strong>Escríbenos</strong>
+    <small>WhatsApp</small>
+  </span>
+
+  <span class="wa-glow"></span>
+</a>
+
+      <button
+        type="button"
+        class="nav-toggle"
+        id="navToggle"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="navLinks"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+
+  </header>
+
+  <!-- ==========================================================
+       REDES SOCIALES
+       ========================================================== -->
+
+  <aside
+    class="social-rail"
+    aria-label="Redes sociales"
+  >
+
+    <a
+      href="https://www.instagram.com/talleres_juma?igsh=MWc5MnF6cHQ4MXBkdQ%3D%3D"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Instagram de Talleres Juma"
+      class="social-pill"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        aria-hidden="true"
+      >
+        <rect
+          x="3"
+          y="3"
+          width="18"
+          height="18"
+          rx="5"
+        />
+        <circle
+          cx="12"
+          cy="12"
+          r="4"
+        />
+        <circle
+          cx="17.4"
+          cy="6.6"
+          r="1"
+        />
+      </svg>
+    </a>
+
+    <a
+      href="https://www.facebook.com/talleresjuma?locale=es_LA"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Facebook de Talleres Juma"
+      class="social-pill"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        aria-hidden="true"
+      >
+        <path d="M15 8h2V4h-3a4 4 0 0 0-4 4v2H8v4h2v8h4v-8h3l1-4h-4V8a1 1 0 0 1 1-1z"/>
+      </svg>
+    </a>
+
+  </aside>
+
+  <main id="contenido">
+
+    <!-- ========================================================
+         HERO
+         ======================================================== -->
+
+    <section
+      class="hero"
+      id="top"
+      aria-labelledby="hero-title"
+    >
+
+      <div class="hero-inner">
+
+        <p class="hero-eyebrow">
+          Bonao · República Dominicana
+        </p>
+
+        <h1
+          class="hero-title"
+          id="hero-title"
+        >
+          Más de
+          <em>36 años</em>
+          reparando vehículos con seriedad y experiencia.
+        </h1>
+
+        <p class="hero-lead">
+          Talleres Juma es un taller familiar con 20 años de trayectoria propia
+          y casi tres décadas de oficio. Diagnóstico honesto, trabajo bien hecho
+          y un dueño que responde el teléfono.
+        </p>
+
+        <div class="hero-actions">
+
+          <a
+            href="https://wa.me/18092962300"
+            class="btn btn-primary"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Escribir por WhatsApp a Talleres Juma"
+          >
+            Escribir por WhatsApp
+          </a>
+
+          <a
+            href="tel:+18092962300"
+            class="btn btn-ghost"
+            aria-label="Llamar al 809 296 2300"
+          >
+            Llamar: (809) 296-2300
+          </a>
+
+        </div>
+
+        <ul
+          class="hero-tags"
+          aria-label="Valores de Talleres Juma"
+        >
+          <li>Seriedad</li>
+          <li>Dedicación</li>
+          <li>Responsabilidad</li>
+        </ul>
+
+      </div>
+
+      <div
+        class="hero-stats"
+        aria-label="Datos de Talleres Juma"
+      >
+
+        <div class="stat">
+          <span class="stat-num">36</span>
+          <span class="stat-label">
+            Años de experiencia
+          </span>
+        </div>
+
+        <div class="stat">
+          <span class="stat-num">20</span>
+          <span class="stat-label">
+            Años como empresa propia
+          </span>
+        </div>
+
+        <div class="stat">
+          <span class="stat-num">100%</span>
+          <span class="stat-label">
+            Diagnóstico honesto
+          </span>
+        </div>
+
+      </div>
+
+      <div
+        class="scroll-hint"
+        aria-hidden="true"
+      >
+        <span>Desplázate</span>
+        <div class="scroll-hint-line"></div>
+      </div>
+
+    </section>
+
+    <!-- ========================================================
+         MARQUEE
+         ======================================================== -->
+
+    <section
+      class="marquee"
+      aria-label="Servicios principales"
+    >
+
+      <div class="marquee-track">
+
+        <span>MOTOR</span>
+        <span>TRANSMISIÓN</span>
+        <span>FRENOS</span>
+        <span>SUSPENSIÓN</span>
+        <span>ELÉCTRICO</span>
+        <span>AIRE ACONDICIONADO</span>
+        <span>DIAGNÓSTICO COMPUTARIZADO</span>
+
+        <span aria-hidden="true">MOTOR</span>
+        <span aria-hidden="true">TRANSMISIÓN</span>
+        <span aria-hidden="true">FRENOS</span>
+        <span aria-hidden="true">SUSPENSIÓN</span>
+        <span aria-hidden="true">ELÉCTRICO</span>
+        <span aria-hidden="true">AIRE ACONDICIONADO</span>
+        <span aria-hidden="true">DIAGNÓSTICO COMPUTARIZADO</span>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================================
+         SERVICIOS
+         ======================================================== -->
+
+    <section
+      class="section services"
+      id="servicios"
+      aria-labelledby="servicios-title"
+    >
+
+      <div class="container">
+
+        <div class="section-head reveal">
+
+          <h2 id="servicios-title">
+            Lo que hacemos, lo hacemos completo
+          </h2>
+
+          <p>
+            No enviamos tu carro a otro lado. Cada área del taller está pensada
+            para resolver el problema de raíz, no para maquillarlo.
+          </p>
+
+        </div>
+
+        <div class="service-grid">
+
+          <!-- MOTOR -->
+
+          <article class="service-card reveal">
+
+            <div
+              class="service-icon-box"
+              aria-hidden="true"
+            >
+              <svg viewBox="0 0 24 24">
+                <path d="M5 8h11l3 3v6H5z"/>
+                <path d="M8 8V5h5v3"/>
+                <path d="M19 13h2"/>
+                <path d="M3 13h2"/>
+                <path d="M9 12h4"/>
+              </svg>
+            </div>
+
+            <h3>Motor</h3>
+
+            <p>
+              Diagnóstico, reparación y reconstrucción. Desde ruidos raros
+              hasta reparaciones mayores, sin adivinar.
+            </p>
+
+          </article>
+
+          <!-- TRANSMISIÓN -->
+
+          <article class="service-card reveal">
+
+            <div
+              class="service-icon-box"
+              aria-hidden="true"
+            >
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="7"/>
+                <circle cx="12" cy="12" r="2"/>
+                <path d="M12 5v5"/>
+                <path d="M12 14v5"/>
+                <path d="M5 12h5"/>
+                <path d="M14 12h5"/>
+              </svg>
+            </div>
+
+            <h3>Transmisión</h3>
+
+            <p>
+              Automática y manual. Cambios de aceite, ajustes y reparación
+              completa de cajas de velocidad.
+            </p>
+
+          </article>
+
+          <!-- FRENOS -->
+
+          <article class="service-card reveal">
+
+            <div
+              class="service-icon-box"
+              aria-hidden="true"
+            >
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="8"/>
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M16 5l3-2"/>
+                <path d="M8 19l-3 2"/>
+              </svg>
+            </div>
+
+            <h3>Frenos</h3>
+
+            <p>
+              Pastillas, discos, calipers y sistema hidráulico completo.
+              Tu seguridad no se negocia.
+            </p>
+
+          </article>
+
+          <!-- SUSPENSIÓN -->
+
+          <article class="service-card reveal">
+
+            <div
+              class="service-icon-box"
+              aria-hidden="true"
+            >
+              <svg viewBox="0 0 24 24">
+                <path d="M8 4v16"/>
+                <path d="M16 4v16"/>
+                <path d="M8 7h8"/>
+                <path d="M8 17h8"/>
+                <path d="M10 9l4 2-4 2 4 2"/>
+              </svg>
+            </div>
+
+            <h3>Suspensión y dirección</h3>
+
+            <p>
+              Amortiguadores, rótulas, bujes. Devolvemos la estabilidad
+              y el manejo suave al vehículo.
+            </p>
+
+          </article>
+
+          <!-- ELÉCTRICO -->
+
+          <article class="service-card reveal">
+
+            <div
+              class="service-icon-box"
+              aria-hidden="true"
+            >
+              <svg viewBox="0 0 24 24">
+                <rect
+                  x="4"
+                  y="7"
+                  width="16"
+                  height="11"
+                  rx="2"
+                />
+                <path d="M8 7V5h8v2"/>
+                <path d="M8 12h3"/>
+                <path d="M13 12h3"/>
+                <path d="M10 15h4"/>
+              </svg>
+            </div>
+
+            <h3>Sistema eléctrico</h3>
+
+            <p>
+              Baterías, alternadores, marchas y cableado. Encontramos
+              el corto que nadie más encuentra.
+            </p>
+
+          </article>
+
+          <!-- DIAGNÓSTICO -->
+
+          <article class="service-card reveal">
+
+            <div
+              class="service-icon-box"
+              aria-hidden="true"
+            >
+              <svg viewBox="0 0 24 24">
+                <rect
+                  x="4"
+                  y="3"
+                  width="16"
+                  height="18"
+                  rx="2"
+                />
+                <rect
+                  x="7"
+                  y="6"
+                  width="10"
+                  height="6"
+                  rx="1"
+                />
+                <path d="M8 16h2"/>
+                <path d="M14 16h2"/>
+                <path d="M8 18h8"/>
+              </svg>
+            </div>
+
+            <h3>Diagnóstico computarizado</h3>
+
+            <p>
+              Escaneo con equipo actualizado para leer exactamente lo que
+              el carro está reportando.
+            </p>
+
+          </article>
+
+        </div>
+
+        <!-- SEGUNDA FILA DE SERVICIOS -->
+
+        <div
+          class="service-grid"
+          style="margin-top:18px;"
+        >
+
+          <!-- CAMBIO DE ACEITE -->
+
+          <article class="service-card reveal">
+
+            <div
+              class="service-icon-box"
+              aria-hidden="true"
+            >
+              <svg viewBox="0 0 24 24">
+                <path d="M9 4h6"/>
+                <path d="M10 4v4"/>
+                <path d="M14 4v4"/>
+                <path d="M8 8h8"/>
+                <path d="M8 8v11h8V8"/>
+                <path d="M10 14c1 1 3 1 4 0"/>
+              </svg>
+            </div>
+
+            <h3>Cambio de aceite</h3>
+
+            <p>
+              Cambio de aceite y revisión básica para ayudar a mantener
+              el motor funcionando correctamente.
+            </p>
+
+          </article>
+
+          <!-- GOMAS -->
+
+          <article class="service-card reveal">
+
+            <div
+              class="service-icon-box"
+              aria-hidden="true"
+            >
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="8"/>
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M12 4v5"/>
+                <path d="M12 15v5"/>
+                <path d="M4 12h5"/>
+                <path d="M15 12h5"/>
+              </svg>
+            </div>
+
+            <h3>Gomas</h3>
+
+            <p>
+              Servicio relacionado con gomas para ayudarte a mantener
+              un buen contacto y estabilidad en la carretera.
+            </p>
+
+          </article>
+
+          <!-- BATERÍAS -->
+
+          <article class="service-card reveal">
+
+            <div
+              class="service-icon-box"
+              aria-hidden="true"
+            >
+              <svg viewBox="0 0 24 24">
+                <rect
+                  x="4"
+                  y="7"
+                  width="16"
+                  height="12"
+                  rx="2"
+                />
+                <path d="M8 7V5h3v2"/>
+                <path d="M13 7V5h3v2"/>
+                <path d="M8 13h3"/>
+                <path d="M9.5 11.5v3"/>
+                <path d="M14 13h3"/>
+              </svg>
+            </div>
+
+            <h3>Baterías</h3>
+
+            <p>
+              Revisión y servicio de baterías para detectar problemas
+              de arranque y alimentación eléctrica.
+            </p>
+
+          </article>
+
+          <!-- ALINEACIÓN -->
+
+          <article class="service-card reveal">
+
+            <div
+              class="service-icon-box"
+              aria-hidden="true"
+            >
+              <svg viewBox="0 0 24 24">
+                <path d="M5 4l3 16"/>
+                <path d="M19 4l-3 16"/>
+                <circle cx="12" cy="12" r="2"/>
+                <path d="M8 8h8"/>
+                <path d="M8.7 16h6.6"/>
+              </svg>
+            </div>
+
+            <h3>Alineación y balanceo</h3>
+
+            <p>
+              Servicio para mejorar el comportamiento, estabilidad
+              y desgaste uniforme de las gomas.
+            </p>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================================
+         NOSOTROS
+         FOTO: fotoej2.jpeg
+         ======================================================== -->
+
+    <section
+      class="section split"
+      id="nosotros"
+      aria-labelledby="nosotros-title"
+    >
+
+      <div class="container split-grid">
+
+        <div class="split-text reveal">
+
+          <p class="section-kicker">
+            Desde hace 36 años
+          </p>
+
+          <h2 id="nosotros-title">
+            Un taller que se construyó reparación por reparación
+          </h2>
+
+          <p>
+            Juma empezó como el trabajo de una sola persona con las manos
+            llenas de grasa y la palabra empeñada. 20 añ atrás se
+            convirtió en su propio negocio, pero la manera de trabajar nunca
+            cambió: se revisa lo que realmente está fallando, se explica en
+            palabras que el cliente entiende, y se cobra por el trabajo que se
+            hizo, no por el que se pudo haber inventado.
+          </p>
+
+          <p>
+            Hoy seguimos siendo un taller de Primera con estándares de taller
+            grande: herramienta actualizada, diagnóstico real y un dueño que
+            conoce a sus clientes por nombre.
+          </p>
+
+          <a
+            href="#contacto"
+            class="btn btn-outline"
+          >
+            Visítanos
+          </a>
+
+        </div>
+
+        <div
+          class="split-visual reveal"
+          aria-label="Imagen de Talleres Juma"
+        >
+
+          <div class="visual-frame">
+
+            <img
+              src="./assets/fotoej2.jpg"
+              alt="Trabajo realizado en Talleres Juma"
+              loading="lazy"
+              decoding="async"
+            >
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================================
+         GALERÍA
+         ======================================================== -->
+
+    <section
+      class="section gallery"
+      id="galeria"
+      aria-labelledby="galeria-title"
+    >
+
+      <div class="container">
+
+        <div class="section-head reveal">
+
+          <span class="gallery-kicker">
+            Nuestras instalaciones
+          </span>
+
+          <h2 id="galeria-title">
+            Fotos del taller
+          </h2>
+
+          <p>
+            Fotos reales de trabajos, del equipo y del espacio.
+            Se actualiza con cada semana de trabajo.
+          </p>
+
+        </div>
+
+        <div
+          class="gallery-grid"
+          id="galleryGrid"
+        >
+
+          <figure class="gallery-item reveal">
+
+            <div class="gallery-image-wrap">
+
+              <img
+                src="./assets/afuera2.jpeg"
+                alt="Vista exterior del taller"
+                loading="lazy"
+                decoding="async"
+              >
+
+              <div
+                class="gallery-overlay"
+                aria-hidden="true"
+              ></div>
+
+            </div>
+
+            <figcaption>
+              <span class="gallery-label">
+                Exterior
+              </span>
+              <strong>
+                Vista exterior
+              </strong>
+            </figcaption>
+
+          </figure>
+
+          <figure class="gallery-item gallery-wide reveal">
+
+            <div class="gallery-image-wrap">
+
+              <img
+                src="./assets/adentro.jpeg"
+                alt="Interior del taller y área de trabajo"
+                loading="lazy"
+                decoding="async"
+              >
+
+              <div
+                class="gallery-overlay"
+                aria-hidden="true"
+              ></div>
+
+            </div>
+
+            <figcaption>
+              <span class="gallery-label">
+                Interior
+              </span>
+              <strong>
+                Área de trabajo
+              </strong>
+            </figcaption>
+
+          </figure>
+
+          <figure class="gallery-item reveal">
+
+            <div class="gallery-image-wrap">
+
+              <img
+                src="./assets/sala1.jpeg"
+                alt="Sala de espera para clientes"
+                loading="lazy"
+                decoding="async"
+              >
+
+              <div
+                class="gallery-overlay"
+                aria-hidden="true"
+              ></div>
+
+            </div>
+
+            <figcaption>
+              <span class="gallery-label">
+                Sala de espera
+              </span>
+              <strong>
+                Espacio para clientes
+              </strong>
+            </figcaption>
+
+          </figure>
+
+          <figure class="gallery-item reveal">
+
+            <div class="gallery-image-wrap">
+
+              <img
+                src="./assets/sala2.jpeg"
+                alt="Área de recepción y sala de espera"
+                loading="lazy"
+                decoding="async"
+              >
+
+              <div
+                class="gallery-overlay"
+                aria-hidden="true"
+              ></div>
+
+            </div>
+
+            <figcaption>
+              <span class="gallery-label">
+                Sala de espera
+              </span>
+              <strong>
+                Área de recepción
+              </strong>
+            </figcaption>
+
+          </figure>
+
+        </div>
+
+        <div class="gallery-footer reveal">
+
+          <span
+            class="gallery-footer-line"
+            aria-hidden="true"
+          ></span>
+
+          <p>
+            Un vistazo a nuestros espacios y áreas de atención.
+          </p>
+
+          <span
+            class="gallery-footer-line"
+            aria-hidden="true"
+          ></span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================================
+         CÓMO TRABAJAMOS
+         FOTO: fotoej3.jpeg
+         ======================================================== -->
+
+    <section
+      class="section split reverse"
+      aria-labelledby="trabajo-title"
+    >
+
+      <div class="container split-grid">
+
+        <div
+          class="split-visual reveal"
+          aria-label="Imagen de trabajo de Talleres Juma"
+        >
+
+          <div class="visual-frame">
+
+            <img
+              src="./assets/fotoej3.jpg"
+              alt="Trabajo y proceso de reparación en Talleres Juma"
+              loading="lazy"
+              decoding="async"
+            >
+
+          </div>
+
+        </div>
+
+        <div class="split-text reveal">
+
+          <p class="section-kicker">
+            Cómo trabajamos
+          </p>
+
+          <h2 id="trabajo-title">
+            Diagnóstico primero, presupuesto después, reparación al final
+          </h2>
+
+          <p>
+            Nunca empezamos a desarmar nada sin antes decirte qué encontramos
+            y cuánto va a costar resolverlo. Si la reparacion tiene más de un
+            camino, te explicamos las opciones y tú decides con la información
+            completa.
+          </p>
+
+          <p>
+            Ese orden — mirar, explicar, acordar, reparar — es lo que nos ha
+            mantenido 20 años como negocio propio en la misma comunidad.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================================
+         OPINIONES
+         ======================================================== -->
+
+    <section
+      class="section testimonials"
+      id="opiniones"
+      aria-labelledby="opiniones-title"
+    >
+
+      <div class="container">
+
+        <div class="section-head reveal">
+
+          <h2 id="opiniones-title">
+            Lo que dicen quienes ya nos confiaron su carro
+          </h2>
+
+        </div>
+
+        <div class="testimonial-grid">
+
+          <blockquote class="testimonial-card reveal">
+
+            <p>
+              "Llevé el carro pensando que era la transmisión completa y
+              resultó ser algo mucho más simple. Me lo explicaron y me ahorré
+              un dineral."
+            </p>
+
+            <footer>
+
+              <span class="avatar">
+                R.P.
+              </span>
+
+              <div>
+
+                <cite>
+                  Ramón P.
+                </cite>
+
+                <span class="testimonial-meta">
+                  Cliente desde 2019
+                </span>
+
+              </div>
+
+            </footer>
+
+          </blockquote>
+
+          <blockquote class="testimonial-card reveal">
+
+            <p>
+              "Es el único taller donde siento que me dicen la verdad
+              completa, aunque la verdad sea que todavía no hay que reparar nada."
+            </p>
+
+            <footer>
+
+              <span class="avatar">
+                M.C.
+              </span>
+
+              <div>
+
+                <cite>
+                  Milagros C.
+                </cite>
+
+                <span class="testimonial-meta">
+                  Cliente desde 2021
+                </span>
+
+              </div>
+
+            </footer>
+
+          </blockquote>
+
+          <blockquote class="testimonial-card reveal">
+
+            <p>
+              "Llevo mis dos carros ahí desde hace años. Precio justo y
+              el trabajo queda bien hecho a la primera."
+            </p>
+
+            <footer>
+
+              <span class="avatar">
+                J.D.
+              </span>
+
+              <div>
+
+                <cite>
+                  José D.
+                </cite>
+
+                <span class="testimonial-meta">
+                  Cliente desde 2015
+                </span>
+
+              </div>
+
+            </footer>
+
+          </blockquote>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================================
+         CONTACTO
+         ======================================================== -->
+
+    <section
+      class="section cta-final"
+      id="contacto"
+      aria-labelledby="contacto-title"
+    >
+
+      <div class="container cta-grid">
+
+        <div class="cta-text reveal">
+
+          <h2 id="contacto-title">
+            Trae tu carro. Vamos a ver qué tiene.
+          </h2>
+
+          <p>
+            Escríbenos por WhatsApp, llámanos o pasa directo por el taller.
+            Respondemos rápido y sin rodeos.
+          </p>
+
+          <div class="hero-actions">
+
+            <a
+              href="https://wa.me/18092962300"
+              class="btn btn-primary"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Escribir por WhatsApp a Talleres Juma"
+            >
+              Escribir por WhatsApp
+            </a>
+
+            <a
+              href="tel:+18092962300"
+              class="btn btn-ghost"
+              aria-label="Llamar al 809 296 2300"
+            >
+              (809) 296-2300
+            </a>
+
+          </div>
+
+          <div class="contact-list">
+
+            <a
+              href="https://www.instagram.com/talleres_juma?igsh=MWc5MnF6cHQ4MXBkdQ%3D%3D"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Instagram — @talleres_juma
+            </a>
+
+            <a
+              href="https://www.facebook.com/talleresjuma?locale=es_LA"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Facebook — Talleres Juma
+            </a>
+
+            <a
+              href="https://www.google.com/maps/place/Talleres+Juma/@18.9353289,-70.3934571,17z/data=!3m1!4b1!4m6!3m5!1s0x8eafdf1a36ca8ccf:0x68ae82c1534e0b3b!8m2!3d18.9353238!4d-70.3908822!16s%2Fg%2F11cs9m3d5f"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Ver ubicación en Google Maps
+            </a>
+
+          </div>
+
+        </div>
+
+        <div
+          class="cta-map reveal"
+          aria-label="Mapa de ubicación de Talleres Juma"
+        >
+
+          <iframe
+            title="Ubicación de Talleres Juma en Bonao"
+            src="https://www.google.com/maps?q=Talleres+Juma,+Bonao,+Rep%C3%BAblica+Dominicana&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ==========================================================
+       FOOTER
+       ========================================================== -->
+
+  <footer class="footer">
+
+    <div class="container footer-grid">
+
+      <div class="footer-brand">
+
+        <img
+          src="assets/logo.png"
+          alt="Talleres Juma"
+          class="footer-logo"
+          loading="lazy"
+        >
+
+        <p>
+          Seriedad, Dedicación y Responsabilidad. 36 años de experiencia
+          y 20 años con nuestra propia empresa.
+        </p>
+
+      </div>
+
+      <div class="footer-col">
+
+        <h3>Servicios</h3>
+
+        <a href="#servicios">Motor</a>
+        <a href="#servicios">Transmisión</a>
+        <a href="#servicios">Frenos</a>
+        <a href="#servicios">Diagnóstico computarizado</a>
+
+      </div>
+
+      <div class="footer-col">
+
+        <h3>Taller</h3>
+
+        <a href="#nosotros">Nosotros</a>
+        <a href="#galeria">Galería</a>
+        <a href="#opiniones">Opiniones</a>
+        <a href="#contacto">Contacto</a>
+
+      </div>
+
+      <div class="footer-col">
+
+        <h3>Contacto</h3>
+
+        <a href="tel:+18092962300">
+          (809) 296-2300
+        </a>
+
+        <a
+          href="https://wa.me/18092962300"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          WhatsApp
+        </a>
+
+        <a
+          href="https://www.instagram.com/talleres_juma?igsh=MWc5MnF6cHQ4MXBkdQ%3D%3D"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Instagram
+        </a>
+
+        <a
+          href="https://www.facebook.com/talleresjuma?locale=es_LA"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Facebook
+        </a>
+
+        <a
+          href="https://www.google.com/maps/place/Talleres+Juma/@18.9353289,-70.3934571,17z/data=!3m1!4b1!4m6!3m5!1s0x8eafdf1a36ca8ccf:0x68ae82c1534e0b3b!8m2!3d18.9353238!4d-70.3908822!16s%2Fg%2F11cs9m3d5f"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Cómo llegar
+        </a>
+
+      </div>
+
+    </div>
+
+    <div class="footer-bottom container">
+
+      <span>
+        © <span id="year"></span>
+        Talleres Juma. Todos los derechos reservados.
+      </span>
+
+      <span>
+        Bonao, República Dominicana
+      </span>
+
+    </div>
+
+  </footer>
+
+  <!-- ==========================================================
+       WHATSAPP FLOTANTE
+       ========================================================== -->
+
+  <a
+    class="wa-float"
+    href="https://wa.me/18092962300"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Escribir por WhatsApp a Talleres Juma"
+    title="Escribir por WhatsApp"
+  >
+
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      aria-hidden="true"
+    >
+      <path d="M3 21l1.6-4.8A8.4 8.4 0 1 1 8.2 19.4z"/>
+      <path d="M8.5 9.2c0 3.6 2.7 6.3 6.3 6.3.5 0 .8-.4.8-.9v-1.1c0-.3-.2-.5-.5-.6l-2-.5c-.2-.1-.5 0-.6.2l-.5.7c-1.1-.5-2-1.4-2.5-2.5l.7-.5c.2-.1.3-.4.2-.6l-.5-2c-.1-.3-.3-.5-.6-.5H8.4c-.4 0-.9.3-.9.8z"/>
+    </svg>
+
   </a>
-  <a href="https://www.facebook.com/search/top/?q=La%20Avenida%20Terrace%20%26%20Club.facebook" target="_blank" rel="noopener" class="social-float__btn" aria-label="Facebook de La Avenida">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 9h3V6h-3a3 3 0 0 0-3 3v2H9v3h2v6h3v-6h3l1-3h-4v-2a1 1 0 0 1 1-1Z"/></svg>
-  </a>
-</aside>
 
-<button type="button" class="back-to-top" aria-label="Volver arriba">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-</button>
+  <div
+    class="toast"
+    id="toast"
+    role="status"
+    aria-live="polite"
+  ></div>
 
-<div class="toast" role="status" aria-live="polite">
-  <span class="toast__text"></span>
-</div>
+  <!-- ==========================================================
+       SCRIPTS
+       ========================================================== -->
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
-<script src="js/scene.js" defer></script>
-<script src="js/interactions.js" defer></script>
-<script src="js/forms.js" defer></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+    defer
+  ></script>
 
+  <script
+    src="js/scene.js"
+    defer
+  ></script>
+
+  <script
+    src="js/interactions.js"
+    defer
+  ></script>
+
+  <script
+    src="js/forms.js"
+    defer
+  ></script>
+
+  
 </body>
 </html>

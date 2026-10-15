@@ -1,53 +1,66 @@
+/* ==========================================================================
+   Talleres Juma — forms.js
+   Feedback de contacto: toast de confirmación al usar WhatsApp/llamar/copiar
+   ========================================================================== */
+
 (function () {
-  var toast = document.querySelector('.toast');
-  var toastText = toast ? toast.querySelector('.toast__text') : null;
-  var toastTimeout;
+  "use strict";
+
+  var toastEl = document.getElementById("toast");
+  var toastTimer;
 
   function showToast(message) {
-    if (!toast || !toastText) return;
-    toastText.textContent = message;
-    toast.classList.add('is-visible');
-    clearTimeout(toastTimeout);
-    toastTimeout = setTimeout(function () {
-      toast.classList.remove('is-visible');
+    if (!toastEl) return;
+    toastEl.textContent = message;
+    toastEl.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      toastEl.classList.remove("show");
     }, 3200);
   }
 
-  var faqItems = document.querySelectorAll('.faq-item');
-  faqItems.forEach(function (item) {
-    var question = item.querySelector('.faq-item__question');
-    if (!question) return;
-    question.addEventListener('click', function () {
-      var isOpen = item.classList.contains('is-open');
-      faqItems.forEach(function (other) {
-        other.classList.remove('is-open');
-        var q = other.querySelector('.faq-item__question');
-        if (q) q.setAttribute('aria-expanded', 'false');
-      });
-      if (!isOpen) {
-        item.classList.add('is-open');
-        question.setAttribute('aria-expanded', 'true');
+  // ---------- WhatsApp: confirmación al abrir el chat ----------
+  document.querySelectorAll('a[href*="wa.me"]').forEach(function (link) {
+    link.addEventListener("click", function () {
+      showToast("Abriendo WhatsApp: (809) 296-2300");
+    });
+  });
+
+  // ---------- Teléfono: en escritorio no se puede llamar, copiamos el número ----------
+  var isTouch = window.matchMedia("(hover: none)").matches;
+  document.querySelectorAll('a[href^="tel:"]').forEach(function (link) {
+    if (isTouch) return;
+    link.addEventListener("click", function (e) {
+      var number = link.getAttribute("href").replace("tel:", "");
+      if (navigator.clipboard) {
+        e.preventDefault();
+        navigator.clipboard
+          .writeText(number)
+          .then(function () {
+            showToast("Número copiado: " + number);
+          })
+          .catch(function () {
+            showToast("Llámanos al " + number);
+          });
       }
     });
   });
 
-  var copyBtn = document.getElementById('copy-address-btn');
-  var addressText = 'Av. Libertad 86, Bonao 42000, República Dominicana';
+  // ---------- Redes sociales ----------
+  var socialToasts = {
+    "instagram.com": "Abriendo Instagram @talleres_juma",
+    "facebook.com": "Abriendo Facebook de Talleres Juma",
+    "google.com/maps": "Abriendo la ubicación en Google Maps"
+  };
 
-  if (copyBtn) {
-    copyBtn.addEventListener('click', function () {
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard
-          .writeText(addressText)
-          .then(function () {
-            showToast('Dirección copiada al portapapeles');
-          })
-          .catch(function () {
-            showToast('No se pudo copiar la dirección');
-          });
-      } else {
-        showToast('No se pudo copiar la dirección');
+  document.querySelectorAll('a[target="_blank"]').forEach(function (link) {
+    var href = link.getAttribute("href") || "";
+    Object.keys(socialToasts).forEach(function (key) {
+      if (href.indexOf(key) !== -1) {
+        link.addEventListener("click", function () {
+          showToast(socialToasts[key]);
+        });
       }
     });
-  }
+  });
 })();
