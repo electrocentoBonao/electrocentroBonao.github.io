@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Talleres Juma — scene.js  (v2)
+   Talleres Juma — scene.js  (v4 · tren a la derecha, chispas, anillo orbital)
    Fondo 3D: tren de engranajes de precisión que engranan de verdad.
 
    - Engranajes con aro dentado, alma rebajada con agujeros de aligeramiento,
@@ -48,7 +48,8 @@
     return;
   }
 
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isMobile ? 1.4 : 2));
+  var dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1.25 : 1.75);
+  renderer.setPixelRatio(dpr);
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.outputEncoding = THREE.sRGBEncoding;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -75,7 +76,7 @@
 
   var scene = new THREE.Scene();
   var NAVY = 0x060c2b;
-  scene.fog = new THREE.FogExp2(NAVY, isMobile ? 0.042 : 0.034);
+  scene.fog = new THREE.FogExp2(NAVY, isMobile ? 0.044 : 0.038);
 
   var camera = new THREE.PerspectiveCamera(
     42,
@@ -194,7 +195,7 @@
 
   var steelDark = metalMaterial(0x767e97, 0.4, 1.25);
   var steelLight = metalMaterial(0xc7cde2, 0.3, 1.35);
-  var gunmetal = metalMaterial(0x4a5270, 0.5, 0.95);
+  var gunmetal = metalMaterial(0x434a66, 0.55, 0.62);
   var brass = metalMaterial(0xc19a5b, 0.32, 1.3);
 
   var redAccent = metalMaterial(0xb4131f, 0.38, 1.2);
@@ -451,16 +452,6 @@
   ], 0, !isMobile);
   fg.forEach(function (g) { rig.add(g.holder); });
 
-  // Tren de fondo: más grande, oscuro y lejano (profundidad)
-  var bgA = buildChain([
-    { teeth: 34, thick: 0.7, mat: gunmetal, hubMat: steelDark, holes: 8, x: -9, y: 2.5 },
-    { teeth: 20, thick: 0.6, mat: gunmetal, hubMat: steelDark, holes: 6, parent: 0, theta: -70 }
-  ], -6.5, false);
-  var bgB = buildChain([
-    { teeth: 28, thick: 0.66, mat: gunmetal, hubMat: steelDark, holes: 7, x: 9.5, y: -2.5 },
-    { teeth: 16, thick: 0.56, mat: gunmetal, hubMat: steelDark, holes: 5, parent: 0, theta: 100 }
-  ], -6.5, false);
-  bgA.concat(bgB).forEach(function (g) { bgRig.add(g.holder); });
 
   // ---------------------------------------------------------------------
   // Decoración técnica (estética de plano de ingeniería)
@@ -490,52 +481,26 @@
       g.stroke();
     }
 
-    ring(506, 3, "rgba(170,190,255,0.9)");
-    ring(468, 1.5, "rgba(170,190,255,0.5)");
-    ring(392, 1.5, "rgba(170,190,255,0.4)");
-    ring(300, 1, "rgba(170,190,255,0.25)");
+    // Solo dos anillos: borde exterior y una guía interior muy tenue
+    ring(506, 3, "rgba(170,190,255,0.85)");
+    ring(430, 1.5, "rgba(170,190,255,0.28)");
 
-    for (d = 0; d < 360; d += 2) {
+    // Marcas cada 10°, con una más larga cada 30° (sin numeración)
+    for (d = 0; d < 360; d += 10) {
       a = (d * Math.PI) / 180;
       var major = d % 30 === 0;
-      var mid = d % 10 === 0;
-      var r2 = major ? 450 : mid ? 474 : 490;
+      var r2 = major ? 462 : 486;
       g.beginPath();
       g.moveTo(Math.cos(a) * 506, Math.sin(a) * 506);
       g.lineTo(Math.cos(a) * r2, Math.sin(a) * r2);
       g.lineWidth = major ? 3 : 1.5;
-      g.strokeStyle = major ? "rgba(225,233,255,0.95)" : "rgba(170,190,255,0.6)";
+      g.strokeStyle = major ? "rgba(225,233,255,0.9)" : "rgba(170,190,255,0.5)";
       g.stroke();
     }
 
-    g.fillStyle = "rgba(200,215,255,0.85)";
-    g.font = '600 20px "Courier New", monospace';
-    g.textAlign = "center";
-    g.textBaseline = "middle";
-    for (d = 0; d < 360; d += 30) {
-      g.save();
-      g.rotate((d * Math.PI) / 180 + Math.PI / 2);
-      g.translate(0, -424);
-      g.fillText(String(d), 0, 0);
-      g.restore();
-    }
-
-    // Sectores de color de marca
-    arc(392, -20, 70, 8, "rgba(239,36,48,0.9)");
-    arc(392, 160, 200, 8, "rgba(88,120,255,0.9)");
-    arc(340, 210, 320, 3, "rgba(170,190,255,0.7)");
-    arc(340, 30, 130, 3, "rgba(170,190,255,0.7)");
-
-    // Marcas cardinales interiores
-    for (d = 0; d < 360; d += 90) {
-      a = (d * Math.PI) / 180;
-      g.beginPath();
-      g.moveTo(Math.cos(a) * 300, Math.sin(a) * 300);
-      g.lineTo(Math.cos(a) * 356, Math.sin(a) * 356);
-      g.lineWidth = 2;
-      g.strokeStyle = "rgba(225,233,255,0.8)";
-      g.stroke();
-    }
+    // Dos sectores de color de marca
+    arc(400, -20, 70, 6, "rgba(239,36,48,0.85)");
+    arc(400, 160, 200, 6, "rgba(88,120,255,0.85)");
 
     var tex = new THREE.CanvasTexture(c);
     tex.encoding = THREE.sRGBEncoding;
@@ -561,10 +526,8 @@
     return mesh;
   }
 
-  var dialNear = makeDial(9.6, -0.9, 0.55);
+  var dialNear = makeDial(9.6, -0.9, 0.2);
   rig.add(dialNear);
-  var dialFar = makeDial(26, -11, 0.22);
-  scene.add(dialFar);
 
   // Círculos primitivos (paso) y líneas de centros entre ruedas engranadas
   var guideMat = new THREE.LineBasicMaterial({
@@ -606,6 +569,94 @@
   );
   rig.add(links);
 
+
+  // ---------------------------------------------------------------------
+  // v4: halo de luz, anillo orbital, chispas en el engrane, tuercas flotantes
+  // ---------------------------------------------------------------------
+  var glowTex = buildSpriteTexture();
+  function addHalo(color, size, x, y, z, op) {
+    var m = new THREE.Mesh(
+      new THREE.PlaneGeometry(size, size),
+      new THREE.MeshBasicMaterial({ map: glowTex, color: color, transparent: true, opacity: 0,
+        blending: THREE.AdditiveBlending, depthWrite: false, fog: false })
+    );
+    m.position.set(x, y, z); m.userData.op = op; rig.add(m); return m;
+  }
+  var halos = [addHalo(0x3b63ec, 17, 0, 0, -2.4, 0.34), addHalo(0xef2430, 8, 3, -3, -2.2, 0.2)];
+
+  var orbit = new THREE.Group();
+  orbit.rotation.set(1.18, 0.25, 0);
+  rig.add(orbit);
+  var ringMat = new THREE.MeshBasicMaterial({ color: 0x7f9bff, transparent: true, opacity: 0,
+    blending: THREE.AdditiveBlending, depthWrite: false, fog: false });
+  orbit.add(new THREE.Mesh(new THREE.TorusGeometry(6.4, 0.014, 6, 180), ringMat));
+  var comets = [[0xef2430, 0], [0xdbe4ff, 2.1], [0x6f8cff, 4.2]].map(function (c) {
+    var s = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: c[0], transparent: true, opacity: 0,
+      blending: THREE.AdditiveBlending, depthWrite: false, fog: false }));
+    s.scale.setScalar(0.65); s.userData.off = c[1]; orbit.add(s); return s;
+  });
+
+  // Chispas que saltan donde los dientes engranan
+  var meshPts = fg.filter(function (g) { return g.parent; });
+  var SN = isMobile ? 28 : 64;
+  var sPos = new Float32Array(SN * 3), sCol = new Float32Array(SN * 3), sVel = new Float32Array(SN * 3);
+  var sLife = new Float32Array(SN), sMax = new Float32Array(SN);
+  for (var si = 0; si < SN; si++) sLife[si] = -Math.random() * 2;
+  var sGeo = new THREE.BufferGeometry();
+  sGeo.setAttribute("position", new THREE.BufferAttribute(sPos, 3));
+  sGeo.setAttribute("color", new THREE.BufferAttribute(sCol, 3));
+  var sMat = new THREE.PointsMaterial({ size: 0.09, map: glowTex, vertexColors: true, transparent: true,
+    opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending, fog: false });
+  var sparks = new THREE.Points(sGeo, sMat);
+  sparks.frustumCulled = false;
+  rig.add(sparks);
+  var rev = 0;
+
+  function updateSparks(dt) {
+    for (var i = 0; i < SN; i++) {
+      var o = i * 3;
+      if (sLife[i] > 0) {
+        sLife[i] -= dt;
+        sVel[o + 1] -= 4.2 * dt;
+        sPos[o] += sVel[o] * dt; sPos[o + 1] += sVel[o + 1] * dt; sPos[o + 2] += sVel[o + 2] * dt;
+        var k = Math.max(0, sLife[i] / sMax[i]);
+        sCol[o] = k; sCol[o + 1] = k * 0.55; sCol[o + 2] = k * 0.18;
+      } else {
+        sCol[o] = sCol[o + 1] = sCol[o + 2] = 0;
+        sLife[i] -= dt;
+        if (sLife[i] < -(0.15 + Math.random() * 1.4) / (1 + rev * 5)) {
+          var g = meshPts[(Math.random() * meshPts.length) | 0], p = g.parent;
+          var cx = Math.cos(g.theta), cy = Math.sin(g.theta), dir = Math.random() < 0.5 ? -1 : 1;
+          var sp = 1.4 + Math.random() * 2.6;
+          sPos[o] = p.x + cx * pitchR(p.teeth); sPos[o + 1] = p.y + cy * pitchR(p.teeth); sPos[o + 2] = (Math.random() - 0.5) * 0.4;
+          sVel[o] = -cy * dir * sp + cx * (Math.random() - 0.5) * 0.8;
+          sVel[o + 1] = cx * dir * sp + cy * (Math.random() - 0.5) * 0.8;
+          sVel[o + 2] = (Math.random() - 0.3) * 0.8;
+          sMax[i] = sLife[i] = 0.5 + Math.random() * 0.7;
+        }
+      }
+    }
+    sGeo.attributes.position.needsUpdate = true;
+    sGeo.attributes.color.needsUpdate = true;
+  }
+
+  // Tuercas hexagonales flotando alrededor (profundidad, nada queda vacío)
+  var nutGeo = new THREE.ExtrudeGeometry(buildHexShape(0.3, 0.12), {
+    depth: 0.14, bevelEnabled: true, bevelThickness: 0.025, bevelSize: 0.02, bevelSegments: 2, curveSegments: 6 });
+  nutGeo.translate(0, 0, -0.07);
+  var nutMats = [steelLight, brass, steelDark, blueAnodized, redAccent];
+  var nuts = [];
+  for (var ni = 0; ni < (isMobile ? 6 : 14); ni++) {
+    var nm = new THREE.Mesh(nutGeo, nutMats[ni % nutMats.length]);
+    var ns = 0.6 + Math.random() * 0.9;
+    nm.userData = { s: ns, by: (Math.random() - 0.5) * 12, ph: Math.random() * 6.28,
+      rx: (Math.random() - 0.5) * 0.7, ry: (Math.random() - 0.5) * 0.7 };
+    nm.position.set((Math.random() - 0.5) * 18, nm.userData.by, Math.random() < 0.75 ? -2 - Math.random() * 4 : 2 + Math.random() * 2.5);
+    nm.rotation.set(Math.random() * 3, Math.random() * 3, 0);
+    nm.scale.setScalar(0.001);
+    rig.add(nm); nuts.push(nm);
+  }
+
   // Polvo de metal / destellos flotando
   function buildSpriteTexture() {
     var c = document.createElement("canvas");
@@ -622,7 +673,7 @@
     return tex;
   }
 
-  var PCOUNT = isMobile ? 90 : 220;
+  var PCOUNT = isMobile ? 36 : 80;
   var pPos = new Float32Array(PCOUNT * 3);
   var pCol = new Float32Array(PCOUNT * 3);
   var pX0 = new Float32Array(PCOUNT);
@@ -652,7 +703,7 @@
   pGeo.setAttribute("position", new THREE.BufferAttribute(pPos, 3));
   pGeo.setAttribute("color", new THREE.BufferAttribute(pCol, 3));
   var pMat = new THREE.PointsMaterial({
-    size: isMobile ? 0.16 : 0.13,
+    size: isMobile ? 0.14 : 0.11,
     map: buildSpriteTexture(),
     vertexColors: true,
     transparent: true,
@@ -686,15 +737,15 @@
   }
   scene.add(key);
 
-  var fill = new THREE.PointLight(0x3b63ec, 5, 32, 2);
+  var fill = new THREE.PointLight(0x3b63ec, 3.8, 32, 2);
   fill.position.set(-8, 2, 4);
   scene.add(fill);
 
-  var rim = new THREE.PointLight(0xef2430, 4.5, 32, 2);
+  var rim = new THREE.PointLight(0xef2430, 3.2, 32, 2);
   rim.position.set(4, -3, -6);
   scene.add(rim);
 
-  var glint = new THREE.PointLight(0xffe2bd, 3, 24, 2);
+  var glint = new THREE.PointLight(0xffe2bd, 2.2, 24, 2);
   glint.position.set(0, 1, 6);
   scene.add(glint);
 
@@ -718,7 +769,21 @@
   lastTarget = targetScrollT;
   currentScrollT = targetScrollT;
 
+  window.addEventListener("pointerdown", function (e) {
+    if (reduceMotion) return;
+    if (e.target.closest && e.target.closest("a,button,input,.lb")) return;
+    rev = 1;
+  }, { passive: true });
+
   var mouseX = 0, mouseY = 0, px = 0, py = 0;
+  if (isMobile && !reduceMotion && window.DeviceOrientationEvent &&
+      typeof DeviceOrientationEvent.requestPermission !== "function") {
+    window.addEventListener("deviceorientation", function (e) {
+      if (e.gamma == null || e.beta == null) return;
+      mouseX = Math.max(-1, Math.min(1, e.gamma / 25));
+      mouseY = Math.max(-1, Math.min(1, (e.beta - 55) / 25));
+    }, { passive: true });
+  }
   if (hasFinePointer && !reduceMotion) {
     window.addEventListener("pointermove", function (ev) {
       mouseX = (ev.clientX / window.innerWidth - 0.5) * 2;
@@ -733,7 +798,6 @@
   var clock = new THREE.Clock();
   var t = 0;
   var driverFg = 0;
-  var driverA = 0.6;
   var driverB = 2.1;
   var INTRO = reduceMotion ? 0.001 : 3.2;
   var motion = reduceMotion ? 0.25 : 1;
@@ -759,37 +823,54 @@
     var eIntro = easeOutCubic(clamp01(t / INTRO));
     var decoIn = reduceMotion ? 1 : clamp01((t - 1.6) / 1.4);
 
-    currentScrollT += (targetScrollT - currentScrollT) * 0.06;
+    currentScrollT += (targetScrollT - currentScrollT) * (1 - Math.exp(-dt * 3.6));
+
+    // Fuera del hero la escena baja de intensidad (hasta ~58%) para que
+    // las secciones de texto se lean limpias sobre el fondo.
+    var calm = clamp01(window.scrollY / (window.innerHeight * 1.1));
+    canvas.style.opacity = (1 - 0.42 * easeOutCubic(calm)).toFixed(3);
 
     // Velocidad de scroll -> acelera / invierte el giro de los engranajes
     var rawVel = dt > 0 ? (targetScrollT - lastTarget) / dt : 0;
     lastTarget = targetScrollT;
     scrollVel += (rawVel - scrollVel) * 0.12;
-    var boost = reduceMotion ? 0 : clampRange(scrollVel * 4.5, -2.0, 2.0);
+    rev *= Math.exp(-dt * 1.6);
+    var boost = reduceMotion ? 0 : clampRange(scrollVel * 3, -1.2, 1.2) + rev * 1.8;
 
     driverFg += (0.14 * motion + boost) * dt;
-    driverA -= (0.045 * motion + boost * 0.35) * dt;
-    driverB += (0.05 * motion + boost * 0.35) * dt;
 
     updateChain(fg, driverFg);
-    updateChain(bgA, driverA);
-    updateChain(bgB, driverB);
 
     // Entrada: las piezas se ensamblan desde fuera y desde atrás
     applyIntro(fg, 0.0, 0.16, 1.7, 6);
-    applyIntro(bgA, 0.5, 0.2, 1.9, 5);
-    applyIntro(bgB, 0.7, 0.2, 1.9, 5);
     renderer.toneMappingExposure = reduceMotion
       ? 1.1
       : 0.2 + 0.9 * easeOutCubic(clamp01(t / 2.0));
 
     // Decoración: aparece tras el ensamblado
-    guideMat.opacity = 0.3 * decoIn;
+    guideMat.opacity = 0.13 * decoIn;
     dialNear.material.opacity = dialNear.userData.maxOpacity * decoIn;
-    dialFar.material.opacity = dialFar.userData.maxOpacity * decoIn;
-    pMat.opacity = (0.7 + 0.12 * Math.sin(t * 0.8)) * decoIn;
+    pMat.opacity = (0.36 + 0.06 * Math.sin(t * 0.8)) * decoIn;
     dialNear.rotation.z = -t * 0.04 * motion;
-    dialFar.rotation.z = t * 0.012 * motion;
+
+    halos.forEach(function (h) { h.material.opacity = h.userData.op * decoIn; });
+    ringMat.opacity = 0.22 * decoIn;
+    sMat.opacity = decoIn;
+    orbit.rotation.z = t * 0.05 * motion;
+    comets.forEach(function (c) {
+      var a = t * 0.35 * motion + c.userData.off;
+      c.position.set(Math.cos(a) * 6.4, Math.sin(a) * 6.4, 0);
+      c.material.opacity = 0.9 * decoIn;
+    });
+    if (!reduceMotion) updateSparks(dt);
+    nuts.forEach(function (m) {
+      var u = m.userData;
+      m.scale.setScalar(u.s * decoIn);
+      if (!reduceMotion) {
+        m.rotation.x += u.rx * dt; m.rotation.y += u.ry * dt;
+        m.position.y = u.by + Math.sin(t * 0.3 + u.ph) * 0.35;
+      }
+    });
 
     // Polvo a la deriva
     if (!reduceMotion) {
@@ -804,15 +885,16 @@
     dust.position.y = currentScrollT * 1.5;
 
     // Parallax con el puntero (suavizado)
-    px += (mouseX - px) * 0.05;
-    py += (mouseY - py) * 0.05;
+    var kp = 1 - Math.exp(-dt * 3.1);
+    px += (mouseX - px) * kp;
+    py += (mouseY - py) * kp;
 
     // Cámara: órbita por scroll + dolly de entrada + parallax
     var aspect = camera.aspect;
     var fit = 1 + Math.max(0, 1.25 - aspect) * 0.8;
-    var angle = -0.55 + currentScrollT * 1.4 - (1 - eIntro) * 0.5;
+    var angle = -0.55 + currentScrollT * 1.0 - (1 - eIntro) * 0.5;
     var radius = (13.4 - currentScrollT * 3.2) * fit * (1 + (1 - eIntro) * 0.35);
-    var height = 2.2 - currentScrollT * 4.2;
+    var height = 2.2 - currentScrollT * 3.2;
 
     camera.position.x = Math.sin(angle) * radius + px * 0.9;
     camera.position.z = Math.cos(angle) * radius;
@@ -822,8 +904,11 @@
     // Balanceo suave de los grupos (a distinta velocidad => profundidad)
     rig.rotation.y = Math.sin(t * 0.08) * 0.06 * motion;
     rig.rotation.x = Math.sin(t * 0.06) * 0.03 * motion;
+    var wide = clamp01((aspect - 1.15) / 0.5);
+    var lead = 1 - easeOutCubic(clamp01(window.scrollY / (window.innerHeight * 0.9)));
+    rig.position.x = 0.25 + wide * 3.1 * lead;
+    rig.scale.setScalar(1 - wide * 0.14 * lead);
     rig.position.y = 0.55 + Math.sin(t * 0.4) * 0.08 * motion;
-    bgRig.rotation.y = -Math.sin(t * 0.05) * 0.04 * motion;
 
     // Luces vivas
     fill.position.x = Math.sin(t * 0.16) * 8;
@@ -837,9 +922,39 @@
     renderer.render(scene, camera);
   }
 
+  var lastAct = performance.now(), lastDraw = 0, lastT = 0, nF = 0, accD = 0, degraded = 0;
+  ["scroll", "pointermove", "pointerdown", "touchstart", "touchmove"].forEach(function (ev) {
+    window.addEventListener(ev, function () { lastAct = performance.now(); }, { passive: true });
+  });
+  function degrade() {
+    degraded++;
+    if (dpr > 1) {
+      dpr = Math.max(1, dpr - 0.5);
+      renderer.setPixelRatio(dpr);
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    } else if (renderer.shadowMap.enabled) {
+      renderer.shadowMap.enabled = false;
+      key.castShadow = false;
+      scene.traverse(function (o) {
+        if (o.material) [].concat(o.material).forEach(function (m) { m.needsUpdate = true; });
+      });
+    }
+  }
   function animate() {
     if (!running) return;
     requestAnimationFrame(animate);
+    if (window.__sceneHold || document.hidden) { lastT = 0; clock.getDelta(); return; }
+    var now = performance.now(), idle = isMobile && (now - lastAct) > 2500;
+    if (idle && now - lastDraw < 28) return;
+    lastDraw = now;
+    if (lastT && !idle) {
+      accD += now - lastT;
+      if (++nF % 90 === 0) {
+        if (nF > 120 && accD / 90 > 34 && degraded < 3) degrade();
+        accD = 0;
+      }
+    }
+    lastT = idle ? 0 : now;
     try {
       frame();
     } catch (e) {
@@ -854,10 +969,13 @@
   // Resize
   // ---------------------------------------------------------------------
 
-  var resizeTimer;
+  var resizeTimer, lastW = window.innerWidth, lastH = window.innerHeight;
   window.addEventListener("resize", function () {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(function () {
+      var nw = window.innerWidth, nh = window.innerHeight;
+      if (nw === lastW && Math.abs(nh - lastH) < 120) return;
+      lastW = nw; lastH = nh;
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);

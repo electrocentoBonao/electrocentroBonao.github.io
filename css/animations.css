@@ -9,7 +9,11 @@
 } 
  
 .marquee-track { 
-  animation: marquee-scroll 32s linear infinite; 
+  animation: marquee-scroll 64s linear infinite; 
+  /* padding-right = un hueco más: así la mitad exacta del carril coincide
+     con el inicio de la copia y el bucle no da saltos. */
+  padding-right: 3rem; 
+  will-change: transform; 
 } 
  
 /* ---------- Entrada del hero ---------- */ 
@@ -115,7 +119,4 @@
 } 
 .wa-float { 
   animation: wa-breathe 3.4s ease-in-out infinite; 
-}    
-.marquee-track {
-    animation: marquee 20s linear infinite;
 }
